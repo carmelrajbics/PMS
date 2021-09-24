@@ -1,0 +1,109 @@
+﻿
+@model PMS.Models.CandidateViewModel
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+    <link href="~/toastr/toastr.css" rel="stylesheet" />
+    <link rel="stylesheet" href="@Url.Content("~/css/all.min.css")" type="text/css" />*@
+<div class="col-md-12" style="display:block">
+    <div>
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name"><button>Filter</button>
+        <a class="nav-link " asp-controller="Candidate" asp-action="SaveCandidateInfo">Add</a>
+        <a class="btn btn-success" onclick="toastr.success('Hi! I am success message.');">Success message</a>
+    </div>
+
+    @if (Model.CandidateInfo != null)
+    {
+        <table id="tblsample" class="table table-striped table-bordered dt-responsive nowrap table-hover" style="width:99.9% !important;">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>CandidateName </th>
+                    <th>Qualification</th>
+                    <th>Specilization</th>
+                    <th>Gender</th>
+                    <th>State</th>
+                    <th>District</th>
+                    <th>Address</th>
+                    <th>MobileNo</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CandidateInfo)
+                {
+                    <tr>
+                        <td>
+                            <a title="Edit" asp-controller="Candidate" asp-action="SaveCandidateInfo" asp-route-CandidateId="@item.CandidateId"> <i class="fa fa-edit"></i></a>
+                            <a title="Delete" asp-controller="Candidate" asp-action="Delete" asp-route-CandidateId="@item.CandidateId"> <i class="fa fa-trash"></i></a>
+                        </td>
+                        <td>@item.CandidateName</td>
+                        <td>@item.Qualification</td>
+                        <td>@item.Specilization</td>
+                        <td>@item.Gender</td>
+                        <td>@item.State</td>
+                        <td>@item.District</td>
+                        <td>@item.Address</td>
+                        <td>@item.MobileNo</td>
+                        <td>@item.Email</td>
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    }
+    else
+    {
+        <lable>No record.</lable>
+    }
+</div>
+<script src="~/toastr/toastr.js"></script>
+<script>
+
+ $(document).ready(function () {
+        debugger
+         if ("@TempData["ToastrMessage"]" != null)
+            ShowToastr(@Html.Raw(TempData["ToastrMessage"]));
+
+        Datepicker();
+        $('.js-example-basic-single').select2();
+        $('.js-example-basic-multiple').select2();
+    });
+
+    function ShowToastr(message, title, type) {
+        debugger
+        toastr.options = {
+            "closeButton": false, // true/false
+            "debug": false, // true/false
+            "newestOnTop": false, // true/false
+            "progressBar": false, // true/false
+            "positionClass": "toast-top-right", // toast-top-right / toast-top-left / toast-bottom-right / toast-bottom-left
+            "preventDuplicates": false, //true//false
+            "onclick": null,
+            "showDuration": "3000000", // in milliseconds
+            "hideDuration": "100", // in milliseconds
+            "timeOut": "3000", // in milliseconds
+            "extendedTimeOut": "1000", // in milliseconds
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        switch (type) {
+            case "success":
+                toastr.success(message, title);
+                break;
+            case "warning":
+                toastr.warning(message, title);
+                break;
+            case "error":
+                toastr.error(message, title);
+                break;
+            case "info":
+                toastr.info(message, title);
+                break;
+            default:
+                break;
+        }
+    }
+
+</script>

@@ -1,0 +1,163 @@
+﻿@model PMS.Models.CandidateViewModel
+
+<div>
+    <h4 style="text-align: center; color: #a6c !important">Manage Candidate</h4>
+</div>
+
+<!-- Modal -->
+<div class="modal fade"
+     id="exampleModal"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Candidate</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-mdb-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-outline mb-4">
+                        <input asp-for="@Model.Candidate.CandidateName" class="form-control" required />
+                        <label class="form-label" asp-for="@Model.Candidate.CandidateName"></label>
+                        <span asp-validation-for="@Model.Candidate.CandidateName" class="text-danger"></span>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="form-outline">
+                                <input type="number" maxlength="15" asp-for="@Model.Candidate.MobileNo" class="form-control" required />
+                                <label class="form-label" asp-for="@Model.Candidate.MobileNo"></label>
+                                <span asp-validation-for="@Model.Candidate.MobileNo" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline">
+                                <input type="email" asp-for="@Model.Candidate.Email" class="form-control" required />
+                                <label class="form-label" asp-for="@Model.Candidate.Email"></label>
+                                <span asp-validation-for="@Model.Candidate.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="form-outline">
+                                <input asp-for="@Model.Candidate.Address" class="form-control" required />
+                                <label class="form-label" asp-for="@Model.Candidate.Address"></label>
+                                <span asp-validation-for="@Model.Candidate.Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline">
+                                <input type="radio" asp-for="@Model.Candidate.Gender" value="1" /> Male<br />
+                                <input type="radio" asp-for="@Model.Candidate.Gender" value="2" /> Female<br />
+                                <input type="radio" asp-for="@Model.Candidate.Gender" value="3" /> Others<br />
+                                <span asp-validation-for="@Model.Candidate.Specilization" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="control-label"> Select Qualification</label>
+                        <select asp-for="@Model.Candidate.Qualification" class="form-control" asp-items="ViewBag.Qualification"></select>
+                        <span asp-validation-for="@Model.Candidate.Qualification" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <label class="control-label"> Select Specilization</label>
+                        <select asp-for="@Model.Candidate.Specilization" class="form-control" asp-items="ViewBag.Specilization"></select>
+                        <span asp-validation-for="@Model.Candidate.Specilization" class="text-danger"></span>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="form-outline">
+
+                                <label class="control-label"> Select Sate</label>
+                                <select asp-for="@Model.Candidate.State" class="form-control" asp-items="ViewBag.State"></select>
+                                <span asp-validation-for="@Model.Candidate.State" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline">
+                                <label class="control-label"> Select City</label>
+                                <select asp-for="@Model.Candidate.District" class="form-control" asp-items="ViewBag.District"></select>
+                                <span asp-validation-for="@Model.Candidate.District" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" asp-action="SaveCandidatesInfo" asp-controller="candicate">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" style="display:block">
+    <input type="text" id="myInput" placeholder="Search for names.." title="Type in a name">
+    <button class="btn btn-primary btn-sm">Filter</button>
+    <a class="nav-link " asp-controller="Candidate" asp-action="SaveCandidateInfo"></a>
+    <div>
+        <button type="button"
+                class="btn btn-primary"
+                data-mdb-toggle="modal"
+                data-mdb-target="#exampleModal"
+                style="float:right;margin-right:-9%">
+            Add Candidate
+        </button>
+    </div>
+
+    <div>
+        @if (Model.CandidateInfo != null)
+        {
+<table id="tblsample" class="table table-striped table-bordered dt-responsive nowrap table-hover" style="width:99.9% !important;">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>CandidateName </th>
+            <th>Qualification</th>
+            <th>Specilization</th>
+            <th>Gender</th>
+            <th>State</th>
+            <th>District</th>
+            <th>Address</th>
+            <th>MobileNo</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CandidateInfo)
+        {
+<tr>
+    <td>
+        <a title="Edit" asp-controller="Candidate" asp-action="SaveCandidateInfo" asp-route-CandidateId="@item.CandidateId"> <i class="fa fa-edit"></i></a>
+        <a title="Delete" asp-controller="Candidate" asp-action="Delete" asp-route-CandidateId="@item.CandidateId"> <i class="fa fa-trash"></i></a>
+    </td>
+    <td>@item.CandidateName</td>
+    <td>@item.Qualification</td>
+    <td>@item.Specilization</td>
+    <td>@item.Gender</td>
+    <td>@item.State</td>
+    <td>@item.District</td>
+    <td>@item.Address</td>
+    <td>@item.MobileNo</td>
+    <td>@item.Email</td>
+
+</tr>}
+    </tbody>
+
+</table> }
+else
+{
+<lable>No record.</lable>}
+    </div>
+
+</div>

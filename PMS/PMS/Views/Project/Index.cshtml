@@ -1,0 +1,132 @@
+﻿@model PMS.Models.ProjectViewModel
+    <div>
+        <h4 style="text-align: center; color: #a6c !important">Manage Project</h4>
+    </div>
+
+    <div>
+        <div>
+            <button type="button"
+                    class="btn btn-primary"
+                    data-mdb-toggle="modal"
+                    data-mdb-target="#exampleModal"
+                    style="float:right">
+                Add Project
+            </button>
+        </div>
+
+        <div>
+            @if (Model.ProjectInfo != null)
+            {
+                <table id="tblproject" class="table table-striped table-bordered dt-responsive nowrap table-hover" style="width:99.9% !important;">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th>ProjectTitle </th>
+                            <th>ProjectScope</th>
+                            <th>Document</th>
+                            <th>StartDateEndDate</th>
+                            <th>HoursTaken</th>
+                            <th>MentorName</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.ProjectInfo)
+                        {
+                            <tr>
+                                <td>
+                                    <a title="Edit" asp-controller="Project" asp-action="SaveProjectInfo" asp-route-ProjectId="@item.ProjectId"> <i class="fa fa-edit"></i></a>
+                                    <a title="Delete" asp-controller="Project" asp-action="Delete" asp-route-ProjectId="@item.ProjectId"> <i class="fa fa-trash"></i></a>
+                                </td>
+                                <td>@item.ProjectTitle</td>
+                                <td>@item.ProjectScope</td>
+                                <td>@item.Document</td>
+                                <td>@item.StartDateEndDate</td>
+                                <td>@item.HoursTaken</td>
+                                <td>@item.MentorName</td>
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            }
+            else
+            {
+                <lable>Record Notfound.</lable>
+            }
+        </div>
+
+        <div>
+            <div class="modal fade"
+                 id="exampleModal"
+                 tabindex="-1"
+                 aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Project</h5>
+                            <button type="button"
+                                    class="btn-close"
+                                    data-mdb-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post">
+                                <div class="form-outline mb-4">
+                                    <input asp-for="@Model.Project.ProjectTitle" class="form-control" maxlength="50" required />
+                                    <label class="form-label" asp-for="@Model.Project.ProjectTitle"></label>
+                                    <span asp-validation-for="@Model.Project.ProjectTitle" class="text-danger"></span>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input asp-for="@Model.Project.ProjectScope" class="form-control" required />
+                                    <label class="form-label" asp-for="@Model.Project.ProjectScope"></label>
+                                    <span asp-validation-for="@Model.Project.ProjectScope" class="text-danger"></span>
+                                </div>
+
+                                <div id="date-picker" class="md-form md-outline">
+                                    <input placeholder="Select date" type="date" asp-for="@Model.Project.StartDateEndDate" class="form-control">
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="number" asp-for="@Model.Project.HoursTaken" class="form-control"  maxlength="15" required />
+                                    <label class="form-label" asp-for="@Model.Project.HoursTaken"></label>
+                                    <span asp-validation-for="@Model.Project.HoursTaken" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input asp-for="@Model.Project.MentorName" class="form-control" maxlength="25" required />
+                                    <label class="form-label" asp-for="@Model.Project.MentorName"></label>
+                                    <span asp-validation-for="@Model.Project.MentorName" class="text-danger"></span>
+                                </div>
+                                <button type="submit" class="btn btn-primary" asp-action="SaveProjectsInfo" asp-controller="Project">Save</button>
+                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    $(function () {
+        $("#export").click(function (e) {
+            var table = $("#tblproject");
+            if (table && table.length) {
+                $(table).table2excel({
+                    exclude: ".noExl",
+                    name: "Excel Document Name",
+                    filename: "BBBootstrap" + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
+                    fileext: ".xls",
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: true,
+                    preserveColors: false
+                });
+            }
+        });
+
+    });
+</script>

@@ -1,0 +1,63 @@
+﻿@inject SignInManager<UserModel> signInManager;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>@ViewData["Title"]</title>
+
+    <environment include="Development">
+        <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/mdb.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.20.0/css/mdb.min.css" integrity="sha512-hj9rznBPdFg9A4fACbJcp4ttzdinMDtPrtZ3gBD11DiY3O1xJfn0r1U5so/J0zwfGOzq9teIaH5rFmjFAFw8SA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    </environment>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-top: -4%; margin-left: 8%">
+        <div class="container-fluid bg-primary">
+            <button class="navbar-toggler"
+                    type="button"
+                    data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" style="color:white" aria-current="page" asp-action="index" asp-controller="home">Home</a>
+                    <a class="nav-link" style="color:white" asp-action="index" asp-controller="candicate">Candidate</a>
+                    <a class="nav-link" style="color:white" asp-action="index" asp-controller="project">Project</a>
+                    <a class="nav-link" style="color:white" asp-action="index" asp-controller="ProjectAllocation">Allocate Project</a>
+                </div>
+            </div>
+            <div>
+                <div class="navbar-nav">
+                    <a class="nav-link" style="color:white" asp-action="Logout" asp-controller="Account">Hello @ViewData["UserName"]! Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <partial name="_LoginPartial" />
+    <div class="container body-content" style="margin-top:1%">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2021 - ProjectMangementSystem</p>
+        </footer>
+    </div>
+    <environment include="Development">
+        <script type="text/javascript" src="~/js/mdb.min.js"></script>
+        <script type="text/javascript"></script>
+    </environment>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
